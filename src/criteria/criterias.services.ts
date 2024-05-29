@@ -7,6 +7,7 @@ export class CriteriaServices {
     const criteria: CriteriaDto = {
       id: crypto.randomUUID(),
       criteriaName: 'dasdjasdjasoidj',
+      description: 'dasdasdasdasdasdasdasdasdasda',
       weight: '20',
     };
     console.log(criteria);
