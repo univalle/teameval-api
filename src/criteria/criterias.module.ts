@@ -4,6 +4,6 @@ import { CriteriaServices } from './criterias.services';
 
 @Module({
   controllers: [CriteriaController],
-  providers:[CriteriaServices]
+  providers: [CriteriaServices],
 })
 export class CriteriaModule {}

@@ -1,14 +1,12 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { CriteriaServices } from './criterias.services';
 
-@Controller('criteria')
+@Controller()
 export class CriteriaController {
-    constructor(private CriteriaServices:CriteriaServices){}
+  constructor(private criteriaServices: CriteriaServices) {}
 
-    @Post('/criteria')
-    createCriteria(){
-        return this.CriteriaServices.createCriteria();
-    }
-    
-
+  @Post('/criteria')
+  createCriteria() {
+    return this.criteriaServices.createCriteria();
+  }
 }
