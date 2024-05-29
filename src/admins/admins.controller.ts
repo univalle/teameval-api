@@ -6,7 +6,7 @@ export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}
 
   @Get()
-  getAllAdmins(): string {
+  getAllAdmins(): any {
     return this.adminsService.getAdmins();
   }
 
@@ -16,7 +16,7 @@ export class AdminsController {
   }
 
   @Post()
-  createAdmin(@Body() body: any): string {
+  createAdmin(@Body() body: any): any {
     return this.adminsService.createAdmin(body);
   }
 }
