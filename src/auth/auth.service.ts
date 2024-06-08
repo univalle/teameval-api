@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
 import { PrismaService } from 'src/prisma.service';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -19,11 +20,17 @@ export class AuthService {
     private prisma: PrismaService,
   ) {}
 
-  async register({ name, email, password }: RegisterDto) {
+  async register({ name, email, password, role }: RegisterDto) {
+    await this.prisma.user.deleteMany();
+
     const user = await this.usersService.findOneByEmail(email);
 
     if (user) {
       throw new BadRequestException('User already exists');
+    }
+
+    if (role !== Role.STUDENT && role !== Role.PROFESSOR) {
+      role = Role.STUDENT;
     }
 
     const newPassword = await bcryptjs.hash(password, 10);
@@ -32,6 +39,7 @@ export class AuthService {
       name,
       email,
       password: newPassword,
+      role,
     });
 
     return result;
@@ -39,12 +47,9 @@ export class AuthService {
 
   async login({ email, password }: LoginDto) {
     const user = await this.usersService.findByEmailWithPassword(email);
-    console.log(user);
     if (!user) {
       throw new UnauthorizedException('email is wrong');
     }
-
-    console.log(user);
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {

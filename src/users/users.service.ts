@@ -6,7 +6,6 @@ import { Role } from '@prisma/client';
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
-  private users = [];
 
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.prisma.user.findUnique({
@@ -21,6 +20,14 @@ export class UsersService {
       };
     }
 
+    if (
+      createUserDto.role !== Role.ADMIN &&
+      createUserDto.role !== Role.STUDENT &&
+      createUserDto.role !== Role.PROFESSOR
+    ) {
+      createUserDto.role = Role.STUDENT;
+    }
+
     const newId = crypto.randomUUID();
 
     const newUser = {
@@ -28,7 +35,7 @@ export class UsersService {
       name: createUserDto.name,
       email: createUserDto.email,
       password: createUserDto.password,
-      role: Role.ADMIN,
+      role: createUserDto.role,
     };
 
     try {
@@ -47,19 +54,11 @@ export class UsersService {
   }
 
   async findOneByEmail(email) {
-    if (!email) {
-      return {
-        message: 'Email is required',
-      };
-    }
-
     const findUser = await this.prisma.user.findUnique({
       where: {
         email: email,
       },
     });
-
-    console.log(findUser);
 
     return findUser;
   }
