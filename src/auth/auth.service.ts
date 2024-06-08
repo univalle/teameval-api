@@ -24,13 +24,15 @@ export class AuthService {
       throw new BadRequestException('User already exists');
     }
 
-    await this.usersService.create();
+    const newPassword = await bcryptjs.hash(password, 10);
 
-    return {
+    const result = await this.usersService.create({
       name,
       email,
-      password: await bcryptjs.hash(password, 10),
-    };
+      password: newPassword,
+    });
+
+    return result;
   }
 
   async login({ email, password }: LoginDto) {
@@ -38,6 +40,8 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('email is wrong');
     }
+
+    console.log(user);
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
@@ -50,6 +54,7 @@ export class AuthService {
     return {
       token,
       email,
+      role: user.role,
     };
   }
 
