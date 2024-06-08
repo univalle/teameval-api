@@ -37,16 +37,95 @@ model Professor {
   id          String      @id 
   idUser      String      @unique
   user        User        @relation(fields: [idUser], references: [id])
+  courses     ProfessorCourse[]
 }
 
 model Student {
   id          String      @id 
   idUser      String      @unique
   user        User        @relation(fields: [idUser], references: [id])
+  groups      StudentGroup[]
+  courses     StudentCourse[]
+  evaluations StudentGroupEvaluation[]
 }
 
 model Admin {
   id          String      @id 
   idUser      String      @unique
   user        User        @relation(fields: [idUser], references: [id])
+}
+
+model Course {
+  id          String      @id
+  code        String
+  name        String
+  professors  ProfessorCourse[]
+  students    StudentCourse[]
+}
+
+model Group {
+  id          String      @id
+  code        String
+  name        String
+  students    StudentGroup[]
+  evaluations StudentGroupEvaluation[]
+}
+
+model StudentGroup {
+  id          String      @id
+  group       Group       @relation(fields: [groupId], references: [id])
+  student     Student     @relation(fields: [studentId], references: [id])
+  groupId     String
+  studentId   String
+}
+
+model ProfessorCourse {
+  id          String      @id
+  professor   Professor   @relation(fields: [professorId], references: [id])
+  course      Course      @relation(fields: [courseId], references: [id])
+  professorId String
+  courseId    String
+}
+
+model StudentCourse {
+  id          String      @id
+  student     Student     @relation(fields: [studentId], references: [id])
+  course      Course      @relation(fields: [courseId], references: [id])
+  studentId   String
+  courseId    String
+}
+
+model Evaluation {
+  id          String      @id
+  code        String
+  name        String
+  description String
+  criteria    EvaluationCriteria[]
+  groups      StudentGroupEvaluation[]
+}
+
+model Criteria {
+  id          String      @id
+  code        String
+  name        String
+  description String
+  evaluation  EvaluationCriteria[]
+}
+
+model EvaluationCriteria {
+  id              String      @id
+  evaluation      Evaluation  @relation(fields: [evaluationId], references: [id])
+  criteria        Criteria    @relation(fields: [criteriaId], references: [id])
+  evaluationId    String
+  criteriaId      String
+}
+
+model StudentGroupEvaluation {
+  id              String      @id
+  evaluation      Evaluation  @relation(fields: [evaluationId], references: [id])
+  group           Group       @relation(fields: [groupId], references: [id])
+  student         Student     @relation(fields: [studentId], references: [id])
+  evaluationId    String
+  groupId         String
+  studentId       String
 }
