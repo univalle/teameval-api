@@ -4,6 +4,7 @@ import { UsersModule } from 'src/users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants/jwt.constant';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { jwtConstants } from './constants/jwt.constant';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, PrismaService],
 })
 export class AuthModule {}

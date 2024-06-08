@@ -16,24 +16,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  PROFESSOR
+  STUDENT
+  ADMIN
+}
 
-model Estudiante {
+model User {
   id          String      @id 
-  email       String   @unique
+  email       String      @unique
   name        String
   password    String
+  role        Role
+  professor   Professor?
+  student     Student?
+  admin       Admin?
+}
+
+model Professor {
+  id          String      @id 
+  idUser      String      @unique
+  user        User        @relation(fields: [idUser], references: [id])
+}
+
+model Student {
+  id          String      @id 
+  idUser      String      @unique
+  user        User        @relation(fields: [idUser], references: [id])
 }
 
 model Admin {
   id          String      @id 
-  email       String   @unique
-  name        String
-  password    String
-}
-
-model Criteria{
-  id           String      @id
-  criteriaName String   
-  description  String
-  weight       String
+  idUser      String      @unique
+  user        User        @relation(fields: [idUser], references: [id])
 }

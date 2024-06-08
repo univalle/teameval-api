@@ -9,12 +9,14 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private prisma: PrismaService,
   ) {}
 
   async register({ name, email, password }: RegisterDto) {
@@ -37,6 +39,7 @@ export class AuthService {
 
   async login({ email, password }: LoginDto) {
     const user = await this.usersService.findByEmailWithPassword(email);
+    console.log(user);
     if (!user) {
       throw new UnauthorizedException('email is wrong');
     }
@@ -54,11 +57,12 @@ export class AuthService {
     return {
       token,
       email,
-      role: user.role,
     };
   }
 
   async profile(user) {
-    return await this.usersService.findOneByEmail(user);
+    const userInfo = await this.usersService.findOneByEmail(user.email);
+
+    return userInfo;
   }
 }
