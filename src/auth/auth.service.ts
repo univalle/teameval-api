@@ -5,11 +5,9 @@ import {
 } from '@nestjs/common'
 import { UsersService } from 'src/users/users.service'
 import { RegisterDto } from './dto/register.dto'
-
 import { JwtService } from '@nestjs/jwt'
 import * as bcryptjs from 'bcryptjs'
 import { LoginDto } from './dto/login.dto'
-import { PrismaService } from 'src/prisma.service'
 import { Role } from '@prisma/client'
 
 @Injectable()
@@ -17,12 +15,9 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private prisma: PrismaService,
   ) {}
 
   async register({ name, email, password, role }: RegisterDto) {
-    // delete all users
-    // await this.prisma.user.deleteMany();
     const user = await this.usersService.findOneByEmail(email)
 
     if (user) {
@@ -40,6 +35,25 @@ export class AuthService {
       email,
       password: newPassword,
       role,
+    })
+
+    return result
+  }
+
+  async registerAdmin({ name, email, password }: RegisterDto) {
+    const user = await this.usersService.findOneByEmail(email)
+
+    if (user) {
+      throw new BadRequestException('User already exists')
+    }
+
+    const newPassword = await bcryptjs.hash(password, 10)
+
+    const result = await this.usersService.create({
+      name,
+      email,
+      password: newPassword,
+      role: Role.ADMIN,
     })
 
     return result
@@ -68,7 +82,6 @@ export class AuthService {
 
   async profile(user) {
     const userInfo = await this.usersService.findOneByEmail(user.email)
-
     return userInfo
   }
 }

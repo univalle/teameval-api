@@ -8,6 +8,7 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
+    console.log(createUserDto)
     const existingUser = await this.prisma.user.findUnique({
       where: {
         email: createUserDto.email,
@@ -63,7 +64,7 @@ export class UsersService {
     return findUser
   }
 
-  findByEmailWithPassword(email) {
+  async findByEmailWithPassword(email) {
     return this.prisma.user.findUnique({
       where: {
         email,
@@ -77,19 +78,32 @@ export class UsersService {
     })
   }
 
-  findAll() {
-    return `This action returns all users`
+  async findAll() {
+    return await this.prisma.user.findMany()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
+  async findOne(id) {
+    return await this.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    })
   }
 
-  update() {
-    return `This action updates a user`
+  async update(id, updateUserDto) {
+    return await this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: updateUserDto,
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`
+  async remove(id) {
+    return await this.prisma.user.delete({
+      where: {
+        id: id,
+      },
+    })
   }
 }

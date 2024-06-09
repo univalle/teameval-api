@@ -14,10 +14,13 @@ export class RolesGuard implements CanActivate {
     ])
 
     if (!role) {
+      console.log('No role found')
       return true
     }
 
     const { user } = context.switchToHttp().getRequest()
+
+    console.log('User role:', user.role)
 
     if (user.role === Role.ADMIN) {
       return true

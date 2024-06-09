@@ -29,6 +29,8 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException()
     }
 
+    console.log('User authenticated')
+
     return true
   }
 
