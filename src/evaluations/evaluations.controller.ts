@@ -1,14 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EvaluationsService } from './evaluations.service';
-import { CreateEvaluationDto } from './dto/create-evaluation.dto';
-import { UpdateEvaluationDto } from './dto/update-evaluation.dto';
+// import { CreateEvaluationDto } from './dto/create-evaluation.dto';
+// import { UpdateEvaluationDto } from './dto/update-evaluation.dto';
 
 @Controller('evaluations')
 export class EvaluationsController {
   constructor(private readonly evaluationsService: EvaluationsService) {}
 
   @Post()
-  create(@Body() createEvaluationDto: CreateEvaluationDto) {
+  create(@Body() createEvaluationDto) {
     return this.evaluationsService.create(createEvaluationDto);
   }
 
@@ -19,16 +27,16 @@ export class EvaluationsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.evaluationsService.findOne(+id);
+    return this.evaluationsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEvaluationDto: UpdateEvaluationDto) {
-    return this.evaluationsService.update(+id, updateEvaluationDto);
+  update(@Param('id') id: string, @Body() updateEvaluationDto) {
+    return this.evaluationsService.update(id, updateEvaluationDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.evaluationsService.remove(+id);
+    return this.evaluationsService.remove(id);
   }
 }
