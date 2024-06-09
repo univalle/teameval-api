@@ -8,12 +8,12 @@ import {
   Delete,
 } from '@nestjs/common'
 import { CoursesService } from './courses.service'
-// import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto'
 import { ApiTags } from '@nestjs/swagger'
-// import { Auth } from 'src/auth/decorators/auth.decorator'
-// import { Role } from 'src/common/enums/rol.enum'
+import { Auth } from 'src/auth/decorators/auth.decorator'
+import { Role } from 'src/common/enums/rol.enum'
 
+@Auth(Role.ADMIN)
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
@@ -47,5 +47,17 @@ export class CoursesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.coursesService.remove(id)
+  }
+
+  @ApiTags('Course')
+  @Post('add-student')
+  addStudentToCourse(studentId, courseId) {
+    return this.coursesService.addStudentToCourse(studentId, courseId)
+  }
+
+  @ApiTags('Course')
+  @Get('student-courses/:id')
+  studentCourses(studentId) {
+    return this.coursesService.listStudentCourses(studentId)
   }
 }

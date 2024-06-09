@@ -6,6 +6,7 @@ import { CoursesModule } from './courses/courses.module'
 import { GroupsModule } from './groups/groups.module'
 import { EvaluationsModule } from './evaluations/evaluations.module'
 import { CriteriaModule } from './criteria/criteria.module'
+import { StudentsModule } from './students/students.module'
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CriteriaModule } from './criteria/criteria.module'
     GroupsModule,
     EvaluationsModule,
     CriteriaModule,
+    StudentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
