@@ -57,7 +57,7 @@ model Admin {
 
 model Course {
   id          String      @id
-  code        String
+  code        String      @unique
   name        String
   professors  ProfessorCourse[]
   students    StudentCourse[]
@@ -65,7 +65,7 @@ model Course {
 
 model Group {
   id          String      @id
-  code        String
+  code        String      @unique
   name        String
   students    StudentGroup[]
   evaluations StudentGroupEvaluation[]
@@ -97,7 +97,7 @@ model StudentCourse {
 
 model Evaluation {
   id          String      @id
-  code        String
+  code        String      @unique
   name        String
   description String
   criteria    EvaluationCriteria[]
@@ -106,8 +106,8 @@ model Evaluation {
 
 model Criteria {
   id          String      @id
-  code        String
-  name        String
+  code        String      @unique
+  name        String  
   description String
   evaluation  EvaluationCriteria[]
 }

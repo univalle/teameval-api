@@ -6,6 +6,7 @@ import { ProfesoresModule } from './profesores/profesores.module';
 import { AdminsModule } from './admins/admins.module';
 import { AuthModule } from './auth/auth.module';
 import { CriteriaModule } from './criteria/criterias.module';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CriteriaModule } from './criteria/criterias.module';
     AdminsModule,
     AuthModule,
     CriteriaModule,
+    CoursesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

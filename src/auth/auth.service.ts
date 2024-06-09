@@ -21,8 +21,6 @@ export class AuthService {
   ) {}
 
   async register({ name, email, password, role }: RegisterDto) {
-    await this.prisma.user.deleteMany();
-
     const user = await this.usersService.findOneByEmail(email);
 
     if (user) {
