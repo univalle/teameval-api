@@ -8,15 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { GroupsService } from './groups.service';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { UpdateGroupDto } from './dto/update-group.dto';
+// import { CreateGroupDto } from './dto/create-group.dto';
+// import { UpdateGroupDto } from './dto/update-group.dto';
 
 @Controller('groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
-  create(@Body() createGroupDto: CreateGroupDto) {
+  create(@Body() createGroupDto) {
     return this.groupsService.create(createGroupDto);
   }
 
@@ -31,7 +31,7 @@ export class GroupsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id, @Body() updateGroupDto: UpdateGroupDto) {
+  update(@Param('id') id, @Body() updateGroupDto) {
     return this.groupsService.update(id, updateGroupDto);
   }
 
