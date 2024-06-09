@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { CriteriaService } from './criteria.service';
-import { CriteriaController } from './criteria.controller';
-import { PrismaService } from 'src/prisma.service';
+import { Module } from '@nestjs/common'
+import { CriteriaService } from './criteria.service'
+import { CriteriaController } from './criteria.controller'
+import { PrismaService } from 'src/prisma.service'
 
 @Module({
   controllers: [CriteriaController],

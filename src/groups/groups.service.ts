@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 // import { CreateGroupDto } from './dto/create-group.dto';
 // import { UpdateGroupDto } from './dto/update-group.dto';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class GroupsService {
   constructor(private prisma: PrismaService) {}
   async create(createGroupDto) {
-    const newId = crypto.randomUUID();
-    const checkName = createGroupDto.name ? createGroupDto.name : '';
+    const newId = crypto.randomUUID()
+    const checkName = createGroupDto.name ? createGroupDto.name : ''
 
     return await this.prisma.group.create({
       data: {
@@ -16,11 +16,11 @@ export class GroupsService {
         code: createGroupDto.code,
         name: checkName,
       },
-    });
+    })
   }
 
   async findAll() {
-    return await this.prisma.group.findMany();
+    return await this.prisma.group.findMany()
   }
 
   async findOne(id) {
@@ -28,7 +28,7 @@ export class GroupsService {
       where: {
         id: id,
       },
-    });
+    })
   }
 
   async update(id, updateGroupDto) {
@@ -40,7 +40,7 @@ export class GroupsService {
         code: updateGroupDto.code,
         name: updateGroupDto.name,
       },
-    });
+    })
   }
 
   async remove(id) {
@@ -48,6 +48,6 @@ export class GroupsService {
       where: {
         id: id,
       },
-    });
+    })
   }
 }

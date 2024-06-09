@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { PrismaService } from 'src/prisma.service';
-import { Role } from '@prisma/client';
+import { Injectable } from '@nestjs/common'
+import { CreateUserDto } from './dto/create-user.dto'
+import { PrismaService } from 'src/prisma.service'
+import { Role } from '@prisma/client'
 
 @Injectable()
 export class UsersService {
@@ -12,12 +12,12 @@ export class UsersService {
       where: {
         email: createUserDto.email,
       },
-    });
+    })
 
     if (existingUser) {
       return {
         message: 'User already exists',
-      };
+      }
     }
 
     if (
@@ -25,10 +25,10 @@ export class UsersService {
       createUserDto.role !== Role.STUDENT &&
       createUserDto.role !== Role.PROFESSOR
     ) {
-      createUserDto.role = Role.STUDENT;
+      createUserDto.role = Role.STUDENT
     }
 
-    const newId = crypto.randomUUID();
+    const newId = crypto.randomUUID()
 
     const newUser = {
       id: newId,
@@ -36,20 +36,20 @@ export class UsersService {
       email: createUserDto.email,
       password: createUserDto.password,
       role: createUserDto.role,
-    };
+    }
 
     try {
       const userCreation = await this.prisma.user.create({
         data: newUser,
-      });
+      })
 
       return {
         id: userCreation.id,
         email: userCreation.email,
         role: userCreation.role,
-      };
+      }
     } catch (error) {
-      throw new Error('Failed to create user');
+      throw new Error('Failed to create user')
     }
   }
 
@@ -58,9 +58,9 @@ export class UsersService {
       where: {
         email: email,
       },
-    });
+    })
 
-    return findUser;
+    return findUser
   }
 
   findByEmailWithPassword(email) {
@@ -74,22 +74,22 @@ export class UsersService {
         password: true,
         role: true,
       },
-    });
+    })
   }
 
   findAll() {
-    return `This action returns all users`;
+    return `This action returns all users`
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return `This action returns a #${id} user`
   }
 
   update() {
-    return `This action updates a user`;
+    return `This action updates a user`
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return `This action removes a #${id} user`
   }
 }

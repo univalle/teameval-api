@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 // import { CreateCriterionDto } from './dto/create-criterion.dto';
 // import { UpdateCriterionDto } from './dto/update-criterion.dto';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class CriteriaService {
   constructor(private prisma: PrismaService) {}
   async create(createCriterionDto) {
-    const newId = crypto.randomUUID();
-    const checkName = createCriterionDto.name ? createCriterionDto.name : '';
+    const newId = crypto.randomUUID()
+    const checkName = createCriterionDto.name ? createCriterionDto.name : ''
 
     return await this.prisma.criteria.create({
       data: {
@@ -17,11 +17,11 @@ export class CriteriaService {
         name: checkName,
         description: createCriterionDto.description,
       },
-    });
+    })
   }
 
   async findAll() {
-    return await this.prisma.criteria.findMany();
+    return await this.prisma.criteria.findMany()
   }
 
   async findOne(id) {
@@ -29,7 +29,7 @@ export class CriteriaService {
       where: {
         id: id,
       },
-    });
+    })
   }
 
   async update(id, updateCriterionDto) {
@@ -42,7 +42,7 @@ export class CriteriaService {
         name: updateCriterionDto.name,
         description: updateCriterionDto.description,
       },
-    });
+    })
   }
 
   async remove(id) {
@@ -50,6 +50,6 @@ export class CriteriaService {
       where: {
         id: id,
       },
-    });
+    })
   }
 }

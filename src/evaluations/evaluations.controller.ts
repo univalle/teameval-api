@@ -6,8 +6,8 @@ import {
   Patch,
   Param,
   Delete,
-} from '@nestjs/common';
-import { EvaluationsService } from './evaluations.service';
+} from '@nestjs/common'
+import { EvaluationsService } from './evaluations.service'
 // import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 // import { UpdateEvaluationDto } from './dto/update-evaluation.dto';
 
@@ -17,26 +17,26 @@ export class EvaluationsController {
 
   @Post()
   create(@Body() createEvaluationDto) {
-    return this.evaluationsService.create(createEvaluationDto);
+    return this.evaluationsService.create(createEvaluationDto)
   }
 
   @Get()
   findAll() {
-    return this.evaluationsService.findAll();
+    return this.evaluationsService.findAll()
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.evaluationsService.findOne(id);
+    return this.evaluationsService.findOne(id)
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEvaluationDto) {
-    return this.evaluationsService.update(id, updateEvaluationDto);
+    return this.evaluationsService.update(id, updateEvaluationDto)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.evaluationsService.remove(id);
+    return this.evaluationsService.remove(id)
   }
 }

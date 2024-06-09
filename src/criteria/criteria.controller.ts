@@ -6,10 +6,10 @@ import {
   Patch,
   Param,
   Delete,
-} from '@nestjs/common';
-import { CriteriaService } from './criteria.service';
+} from '@nestjs/common'
+import { CriteriaService } from './criteria.service'
 // import { CreateCriterionDto } from './dto/create-criterion.dto';
-import { UpdateCriterionDto } from './dto/update-criterion.dto';
+import { UpdateCriterionDto } from './dto/update-criterion.dto'
 
 @Controller('criteria')
 export class CriteriaController {
@@ -17,17 +17,17 @@ export class CriteriaController {
 
   @Post()
   create(@Body() createCriterionDto) {
-    return this.criteriaService.create(createCriterionDto);
+    return this.criteriaService.create(createCriterionDto)
   }
 
   @Get()
   findAll() {
-    return this.criteriaService.findAll();
+    return this.criteriaService.findAll()
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.criteriaService.findOne(+id);
+    return this.criteriaService.findOne(+id)
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class CriteriaController {
     @Param('id') id: string,
     @Body() updateCriterionDto: UpdateCriterionDto,
   ) {
-    return this.criteriaService.update(+id, updateCriterionDto);
+    return this.criteriaService.update(+id, updateCriterionDto)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.criteriaService.remove(+id);
+    return this.criteriaService.remove(+id)
   }
 }

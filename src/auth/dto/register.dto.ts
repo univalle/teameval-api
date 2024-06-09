@@ -1,23 +1,23 @@
-import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MinLength } from 'class-validator';
-import { Role } from '@prisma/client';
+import { Transform } from 'class-transformer'
+import { IsEmail, IsString, MinLength } from 'class-validator'
+import { Role } from '@prisma/client'
 
 export class RegisterDto {
   @Transform(({ value }) => value.trim())
   @IsString()
   @MinLength(1)
-  name: string;
+  name: string
 
   @IsEmail()
-  email: string;
+  email: string
 
   @Transform(({ value }) => value.trim())
   @IsString()
   @MinLength(6)
-  password: string;
+  password: string
 
   @Transform(({ value }) => value.trim())
   @IsString()
   @MinLength(1)
-  role: Role;
+  role: Role
 }
