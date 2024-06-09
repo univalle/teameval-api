@@ -106,4 +106,94 @@ export class UsersService {
       },
     })
   }
+
+  async createProfessor(id) {
+    const newId = crypto.randomUUID()
+    return await this.prisma.professor.create({
+      data: {
+        id: newId,
+        idUser: id,
+      },
+    })
+  }
+
+  async createStudent(id) {
+    const newId = crypto.randomUUID()
+    return await this.prisma.student.create({
+      data: {
+        id: newId,
+        idUser: id,
+      },
+    })
+  }
+
+  async createAdmin(id) {
+    const newId = crypto.randomUUID()
+    return await this.prisma.admin.create({
+      data: {
+        id: newId,
+        idUser: id,
+      },
+    })
+  }
+
+  async findAdminId(userId) {
+    const admin = await this.prisma.admin.findUnique({
+      where: {
+        idUser: userId,
+      },
+    })
+
+    return admin
+  }
+
+  async findStudentId(userId) {
+    const student = await this.prisma.student.findUnique({
+      where: {
+        idUser: userId,
+      },
+    })
+
+    return student
+  }
+
+  async findProfessorId(userId) {
+    const professor = await this.prisma.professor.findUnique({
+      where: {
+        idUser: userId,
+      },
+    })
+
+    return professor
+  }
+
+  async findStudentIdByEmail(email) {
+    const userId = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    })
+
+    return await this.findStudentId(userId.id)
+  }
+
+  async findProfessorIdByEmail(email) {
+    const userId = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    })
+
+    return await this.findProfessorId(userId.id)
+  }
+
+  async findAdminIdByEmail(email) {
+    const userId = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    })
+
+    return await this.findAdminId(userId.id)
+  }
 }

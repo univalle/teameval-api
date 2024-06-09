@@ -2,39 +2,65 @@ import { Injectable } from '@nestjs/common'
 import { CreateCourseDto } from './dto/create-course.dto'
 import { UpdateCourseDto } from './dto/update-course.dto'
 import { PrismaService } from 'src/prisma.service'
+import { UsersService } from 'src/users/users.service'
 
 @Injectable()
 export class CoursesService {
-  constructor(private prisma: PrismaService) {}
-  async create(createCourseDto: CreateCourseDto) {
-    const existingCourse = await this.prisma.course.findUnique({
-      where: {
-        code: createCourseDto.code,
-      },
-    })
+  constructor(
+    private prisma: PrismaService,
+    private readonly usersService: UsersService,
+  ) {}
+  async create(createCourseDto: CreateCourseDto, user) {
+    console.log('user', user)
+    console.log('createCourseDto', createCourseDto)
+    // const existingCourse = await this.prisma.course.findUnique({
+    //   where: {
+    //     code: createCourseDto.code,
+    //   },
+    // })
+    // console.log('existingCourse', existingCourse)
 
-    if (existingCourse) {
-      return {
-        message: 'Course already exists',
-      }
-    }
+    // if (existingCourse) {
+    //   return {
+    //     message: 'Course already exists',
+    //   }
+    // }
 
-    const newId = crypto.randomUUID()
+    // const newId = crypto.randomUUID()
 
-    const checkName = createCourseDto.name ? createCourseDto.name : ''
+    // const checkName = createCourseDto.name ? createCourseDto.name : ''
 
-    const courseCreation = await this.prisma.course.create({
-      data: {
-        id: newId,
-        name: checkName,
-        code: createCourseDto.code,
-      },
-    })
+    // const courseCreation = await this.prisma.course.create({
+    //   data: {
+    //     id: newId,
+    //     name: checkName,
+    //     code: createCourseDto.code,
+    //   },
+    // })
+
+    // const newAssignmentId = crypto.randomUUID()
+
+    // if (user.role === 'PROFESSOR') {
+    //   const professorId = await this.usersService.findProfessorIdByEmail(
+    //     user.email,
+    //   )
+    //   await this.prisma.professorCourse.create({
+    //     data: {
+    //       id: newAssignmentId,
+    //       professorId: professorId.id,
+    //       courseId: courseCreation.id,
+    //     },
+    //   })
+    // }
+
+    // return {
+    //   id: courseCreation.id,
+    //   name: courseCreation.name,
+    //   code: courseCreation.code,
+    // }
 
     return {
-      id: courseCreation.id,
-      name: courseCreation.name,
-      code: courseCreation.code,
+      message: 'Not implemented',
     }
   }
 
@@ -121,10 +147,46 @@ export class CoursesService {
   }
 
   async listStudentCourses(studentId: string) {
-    return await this.prisma.studentCourse.findMany({
+    const coursesIds = await this.prisma.studentCourse.findMany({
       where: {
         studentId,
       },
     })
+
+    const courses = []
+
+    for (const course of coursesIds) {
+      const courseInfo = await this.prisma.course.findUnique({
+        where: {
+          id: course.courseId,
+        },
+      })
+
+      courses.push(courseInfo)
+    }
+
+    return courses
+  }
+
+  async listProfessorCourses(professorId: string) {
+    const coursesIds = await this.prisma.professorCourse.findMany({
+      where: {
+        professorId,
+      },
+    })
+
+    const courses = []
+
+    for (const course of coursesIds) {
+      const courseInfo = await this.prisma.course.findUnique({
+        where: {
+          id: course.id,
+        },
+      })
+
+      courses.push(courseInfo)
+    }
+
+    return courses
   }
 }

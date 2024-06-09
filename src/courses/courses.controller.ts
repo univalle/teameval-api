@@ -12,6 +12,8 @@ import { UpdateCourseDto } from './dto/update-course.dto'
 import { ApiTags } from '@nestjs/swagger'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { Role } from 'src/common/enums/rol.enum'
+import { ActiveUser } from 'src/common/decorators/active-user.decorator'
+import { UserActiveInterface } from 'src/common/interfaces/user-active.interface'
 
 @Auth(Role.ADMIN)
 @Controller('courses')
@@ -20,9 +22,9 @@ export class CoursesController {
 
   @ApiTags('Course')
   @Post()
-  create(@Body() createCourseDto) {
-    console.log(createCourseDto)
-    return this.coursesService.create(createCourseDto)
+  create(@Body() createCourseDto, @ActiveUser() user: UserActiveInterface) {
+    console.log('createCourseDto', createCourseDto)
+    return this.coursesService.create(createCourseDto, user)
   }
 
   @ApiTags('Course')

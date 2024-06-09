@@ -37,6 +37,16 @@ export class AuthService {
       role,
     })
 
+    if (role === Role.STUDENT) {
+      await this.usersService.createStudent(result.id)
+    } else if (role === Role.PROFESSOR) {
+      await this.usersService.createProfessor(result.id)
+    } else if (role === Role.ADMIN) {
+      await this.usersService.createAdmin(result.id)
+    } else {
+      throw new BadRequestException('Invalid role')
+    }
+
     return result
   }
 
@@ -82,6 +92,12 @@ export class AuthService {
 
   async profile(user) {
     const userInfo = await this.usersService.findOneByEmail(user.email)
-    return userInfo
+    const adminId = await this.usersService.findAdminId(userInfo.id)
+    return {
+      id: userInfo.id,
+      email: userInfo.email,
+      role: userInfo.role,
+      adminId: adminId.id,
+    }
   }
 }
