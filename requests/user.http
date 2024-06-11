@@ -1,0 +1,32 @@
+### get list of all users
+GET http://localhost:3001/api/usuarios
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+### Create a new user
+POST http://localhost:3001/api/usuarios
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+{
+    "email": "dani@gmail.com",
+    "name": "dani",
+    "password": "12345",
+    "role": "monitor"
+}
+
+
+### Login as a user
+POST http://localhost:3001/api/ingreso
+Content-Type: application/json
+
+{
+    "email": "tristan@gmail.com",
+    "password": "12345"
+}
+
+
+### Delete a user
+DELETE http://localhost:3001/api/usuarios/655c271b48918ddac556eb87
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
