@@ -8,7 +8,6 @@ import { RegisterDto } from './dto/register.dto'
 import { JwtService } from '@nestjs/jwt'
 import * as bcryptjs from 'bcryptjs'
 import { LoginDto } from './dto/login.dto'
-import { Role } from '@prisma/client'
 
 @Injectable()
 export class AuthService {
@@ -31,35 +30,6 @@ export class AuthService {
       email,
       password: newPassword,
       role,
-    })
-
-    if (role === Role.STUDENT) {
-      await this.usersService.createStudent(result.id)
-    } else if (role === Role.PROFESSOR) {
-      await this.usersService.createProfessor(result.id)
-    } else if (role === Role.ADMIN) {
-      await this.usersService.createAdmin(result.id)
-    } else {
-      throw new BadRequestException('Invalid role')
-    }
-
-    return result
-  }
-
-  async registerAdmin({ name, email, password }: RegisterDto) {
-    const user = await this.usersService.findOneByEmail(email)
-
-    if (user) {
-      throw new BadRequestException('User already exists')
-    }
-
-    const newPassword = await bcryptjs.hash(password, 10)
-
-    const result = await this.usersService.create({
-      name,
-      email,
-      password: newPassword,
-      role: Role.ADMIN,
     })
 
     return result
@@ -88,12 +58,10 @@ export class AuthService {
 
   async profile(user) {
     const userInfo = await this.usersService.findOneByEmail(user.email)
-    const adminId = await this.usersService.findAdminId(userInfo.id)
     return {
       id: userInfo.id,
       email: userInfo.email,
       role: userInfo.role,
-      adminId: adminId.id,
     }
   }
 }

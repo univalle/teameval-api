@@ -9,11 +9,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     console.log(createUserDto)
-    const existingUser = await this.prisma.user.findUnique({
-      where: {
-        email: createUserDto.email,
-      },
-    })
+    const existingUser = await this.findOneByEmail(createUserDto.email)
 
     if (existingUser) {
       return {
@@ -21,13 +17,7 @@ export class UsersService {
       }
     }
 
-    if (
-      createUserDto.role !== Role.ADMIN &&
-      createUserDto.role !== Role.STUDENT &&
-      createUserDto.role !== Role.PROFESSOR
-    ) {
-      createUserDto.role = Role.STUDENT
-    }
+    createUserDto.role = await this.setDefaultRole(createUserDto.role)
 
     const newId = crypto.randomUUID()
 
@@ -43,6 +33,8 @@ export class UsersService {
       const userCreation = await this.prisma.user.create({
         data: newUser,
       })
+
+      console.log(newUser)
 
       return {
         id: userCreation.id,
@@ -107,93 +99,25 @@ export class UsersService {
     })
   }
 
-  async createProfessor(id) {
-    const newId = crypto.randomUUID()
-    return await this.prisma.professor.create({
-      data: {
-        id: newId,
-        idUser: id,
-      },
-    })
-  }
-
-  async createStudent(id) {
-    const newId = crypto.randomUUID()
-    return await this.prisma.student.create({
-      data: {
-        id: newId,
-        idUser: id,
-      },
-    })
-  }
-
-  async createAdmin(id) {
-    const newId = crypto.randomUUID()
-    return await this.prisma.admin.create({
-      data: {
-        id: newId,
-        idUser: id,
-      },
-    })
-  }
-
-  async findAdminId(userId) {
-    const admin = await this.prisma.admin.findUnique({
-      where: {
-        idUser: userId,
-      },
-    })
-
-    return admin
-  }
-
-  async findStudentId(userId) {
-    const student = await this.prisma.student.findUnique({
-      where: {
-        idUser: userId,
-      },
-    })
-
-    return student
-  }
-
-  async findProfessorId(userId) {
-    const professor = await this.prisma.professor.findUnique({
-      where: {
-        idUser: userId,
-      },
-    })
-
-    return professor
-  }
-
-  async findStudentIdByEmail(email) {
-    const userId = await this.prisma.user.findUnique({
+  async checkIfUsersExistByEmail(email) {
+    const user = await this.prisma.user.findUnique({
       where: {
         email: email,
       },
     })
 
-    return await this.findStudentId(userId.id)
+    return user ? true : false
   }
 
-  async findProfessorIdByEmail(email) {
-    const userId = await this.prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    })
+  async setDefaultRole(role) {
+    if (
+      role !== Role.ADMIN &&
+      role !== Role.STUDENT &&
+      role !== Role.PROFESSOR
+    ) {
+      return Role.STUDENT
+    }
 
-    return await this.findProfessorId(userId.id)
-  }
-
-  async findAdminIdByEmail(email) {
-    const userId = await this.prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    })
-
-    return await this.findAdminId(userId.id)
+    return role
   }
 }

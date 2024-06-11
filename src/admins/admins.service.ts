@@ -20,13 +20,20 @@ export class AdminsService {
   async profile(user) {
     console.log('user', user)
     const userInfo = await this.usersService.findOneByEmail(user.email)
-    const studentId = await this.usersService.findStudentId(userInfo.id)
+
     return {
       name: userInfo.name,
       email: userInfo.email,
       role: userInfo.role,
       id: userInfo.id,
-      studentId: studentId.id,
     }
   }
+
+  async findAllUsers() {
+    return this.usersService.findAll()
+  }
+
+  // async findAllUsersByRole(role = 'STUDENT') {
+  //   return this.usersService.findAllByRole(role)
+  // }
 }

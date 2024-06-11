@@ -11,13 +11,11 @@ export class ProfessorsService {
 
   async profile(user) {
     const userInfo = await this.usersService.findOneByEmail(user.email)
-    const professorId = await this.usersService.findProfessorId(userInfo.id)
     return {
       name: userInfo.name,
       email: userInfo.email,
       role: userInfo.role,
       id: userInfo.id,
-      professorId: professorId.id,
     }
   }
 

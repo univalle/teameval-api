@@ -16,4 +16,10 @@ export class AdminsController {
   profile(@ActiveUser() user: UserActiveInterface) {
     return this.adminsService.profile(user)
   }
+
+  @Get('all-users')
+  @ApiTags('Admins')
+  allUsers() {
+    return this.adminsService.findAllUsers()
+  }
 }

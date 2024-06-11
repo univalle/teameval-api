@@ -94,7 +94,7 @@ export class CoursesService {
   }
 
   async addStudentToCourse(studentId: string, courseId: string) {
-    const student = await this.prisma.student.findUnique({
+    const student = await this.prisma.user.findUnique({
       where: {
         id: studentId,
       },
