@@ -178,4 +178,24 @@ export class AdminsService {
   async removeProfessorFromCourse(courseId, professorId) {
     return this.coursesService.removeProfessorFromCourse(courseId, professorId)
   }
+
+  // id              String      @id
+  // criteria        Criteria    @relation(fields: [criteriaId], references: [id])
+  // student         User        @relation(fields: [studentId], references: [id])
+  // result          Int
+  // criteriaId      String
+  // studentId       String
+
+  async evaluateCriteriaByStudent(evaluationId, criteriaId, studentId, result) {
+    return this.evaluationService.evaluateCriteriaByStudent(
+      evaluationId,
+      criteriaId,
+      studentId,
+      result,
+    )
+  }
+
+  async findCriteriaByEvaluation(evaluationId) {
+    return this.evaluationService.findCriteriaByEvaluation(evaluationId)
+  }
 }

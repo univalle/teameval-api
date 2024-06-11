@@ -96,4 +96,38 @@ export class EvaluationsService {
       },
     })
   }
+
+  async evaluateCriteriaByStudent(evaluationId, studentId, criteriaId, value) {
+    const newId = crypto.randomUUID()
+
+    return await this.prisma.criteriaStudentResult.create({
+      data: {
+        id: newId,
+        studentId: studentId,
+        criteriaId: criteriaId,
+        result: value,
+      },
+    })
+  }
+
+  async findCriteriaByEvaluationIds(evaluationId) {
+    return await this.prisma.evaluationCriteria.findMany({
+      where: {
+        evaluationId: evaluationId,
+      },
+    })
+  }
+
+  async findCriteriaByEvaluation(evaluationId) {
+    const listOfIds = await this.findCriteriaByEvaluationIds(evaluationId)
+    const criteriaIds = listOfIds.map((item) => item.criteriaId)
+
+    return await this.prisma.criteria.findMany({
+      where: {
+        id: {
+          in: criteriaIds,
+        },
+      },
+    })
+  }
 }

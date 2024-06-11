@@ -240,4 +240,21 @@ export class AdminsController {
       body.professorId,
     )
   }
+
+  @Post('evaluate-criteria-by-student')
+  @ApiTags('Admins')
+  evaluateCriteriaByStudent(@Body() body) {
+    return this.adminsService.evaluateCriteriaByStudent(
+      body.evaluationId,
+      body.studentId,
+      body.criteriaId,
+      body.result,
+    )
+  }
+
+  @Post('find-criteria-by-evaluation')
+  @ApiTags('Admins')
+  findCriteriaByEvaluation(@Body() body) {
+    return this.adminsService.findCriteriaByEvaluation(body.evaluationId)
+  }
 }

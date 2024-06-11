@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common'
-// import { Role } from '../common/enums/rol.enum'
+import { Role } from '../common/enums/rol.enum'
 import { AuthService } from './auth.service'
-// import { Auth } from './decorators/auth.decorator'
+import { Auth } from './decorators/auth.decorator'
 import { LoginDto } from './dto/login.dto'
 import { RegisterDto } from './dto/register.dto'
 import { ApiTags } from '@nestjs/swagger'
@@ -10,7 +10,7 @@ import { ApiTags } from '@nestjs/swagger'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // @Auth(Role.ADMIN)
+  @Auth(Role.ADMIN)
   @ApiTags('auth')
   @Post('register')
   register(
