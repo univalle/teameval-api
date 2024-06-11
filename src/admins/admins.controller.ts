@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, Param } from '@nestjs/common'
 import { AdminsService } from './admins.service'
 import { ApiTags } from '@nestjs/swagger'
 import { Auth } from 'src/auth/decorators/auth.decorator'
@@ -21,5 +21,12 @@ export class AdminsController {
   @ApiTags('Admins')
   allUsers() {
     return this.adminsService.findAllUsers()
+  }
+
+  @Get('all-students-by-role/:id')
+  @ApiTags('Admins')
+  allStudentsByRole(@Param('id') id: string) {
+    console.log('id', id)
+    return this.adminsService.findAllUsersByRole()
   }
 }
