@@ -120,4 +120,12 @@ export class UsersService {
 
     return role
   }
+
+  findAllByRole(role) {
+    return this.prisma.user.findMany({
+      where: {
+        role,
+      },
+    })
+  }
 }

@@ -33,7 +33,7 @@ export class AdminsService {
     return this.usersService.findAll()
   }
 
-  // async findAllUsersByRole(role = 'STUDENT') {
-  //   return this.usersService.findAllByRole(role)
-  // }
+  async findAllUsersByRole(role = 'STUDENT') {
+    return this.usersService.findAllByRole(role)
+  }
 }
