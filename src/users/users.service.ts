@@ -132,4 +132,16 @@ export class UsersService {
       },
     })
   }
+
+  listProfessorsByStudent(studentId) {
+    const listOfCourses = this.prisma.studentCourse.findMany({
+      where: {
+        studentId,
+      },
+    })
+
+    // TODO
+
+    return listOfCourses
+  }
 }

@@ -20,6 +20,13 @@ import { StudentsService } from './students.service'
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
+  // - view and update their profile
+  // - view his courses
+  // - view his evaluations
+  // - view his groups
+  // - view his professors
+  // - view his evaluations results
+
   @Get('profile')
   @ApiTags('students')
   profile(@ActiveUser() user: UserActiveInterface) {
@@ -30,5 +37,35 @@ export class StudentsController {
   @ApiTags('students')
   courses(@ActiveUser() user: UserActiveInterface) {
     return this.studentsService.courses(user)
+  }
+
+  @Get('evaluations')
+  @ApiTags('students')
+  evaluations(@ActiveUser() user: UserActiveInterface) {
+    return this.studentsService.evaluations(user)
+  }
+
+  @Get('groups')
+  @ApiTags('students')
+  groups(@ActiveUser() user: UserActiveInterface) {
+    return this.studentsService.groups(user)
+  }
+
+  @Get('professors')
+  @ApiTags('students')
+  professors(@ActiveUser() user: UserActiveInterface) {
+    return this.studentsService.professors(user)
+  }
+
+  @Get('evaluate')
+  @ApiTags('students')
+  evaluate(@ActiveUser() user: UserActiveInterface) {
+    return this.studentsService.evaluate(user)
+  }
+
+  @Get('results')
+  @ApiTags('students')
+  results(@ActiveUser() user: UserActiveInterface) {
+    return this.studentsService.results(user)
   }
 }

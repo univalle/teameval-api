@@ -35,4 +35,8 @@ export class ProfessorsService {
     const { id } = await this.usersService.findOneByEmail(user.email)
     return await this.coursesService.listProfessorCourses(id)
   }
+
+  async listProfessorsByStudent(studentId) {
+    return await this.usersService.listProfessorsByStudent(studentId)
+  }
 }

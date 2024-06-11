@@ -270,3 +270,25 @@ export class AdminsController {
     return this.adminsService.findCriteriaByEvaluation(body.evaluationId)
   }
 }
+
+// options that student should have
+// - view and update their profile
+// - view all courses
+// - view his courses
+// - view his evaluations
+// - view his criteria
+// - view his groups
+// - view his professors
+// - view his evaluations results
+
+// options that professor should have
+// - view and update their profile
+// - view all courses
+// - view his courses
+// - view his evaluations
+// - view his criteria
+// - view his groups
+// - view his students
+// - view his evaluations results
+// - view his evaluations results by criteria
+// - view his evaluations results by student

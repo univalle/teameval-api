@@ -20,6 +20,14 @@ export class EvaluationsService {
     })
   }
 
+  async findAllByStudent(studentId) {
+    return await this.prisma.studentGroupEvaluation.findMany({
+      where: {
+        studentId: studentId,
+      },
+    })
+  }
+
   async findAll() {
     return await this.prisma.evaluation.findMany()
   }

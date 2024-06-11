@@ -8,5 +8,6 @@ import { UsersModule } from 'src/users/users.module'
   controllers: [ProfessorsController],
   providers: [ProfessorsService],
   imports: [UsersModule, CoursesModule],
+  exports: [ProfessorsModule],
 })
 export class ProfessorsModule {}
