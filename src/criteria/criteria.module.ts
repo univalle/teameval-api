@@ -6,5 +6,6 @@ import { PrismaService } from 'src/prisma.service'
 @Module({
   controllers: [CriteriaController],
   providers: [CriteriaService, PrismaService],
+  exports: [CriteriaService],
 })
 export class CriteriaModule {}

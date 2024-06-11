@@ -24,10 +24,6 @@ export class AuthService {
       throw new BadRequestException('User already exists')
     }
 
-    if (role !== Role.STUDENT && role !== Role.PROFESSOR) {
-      role = Role.STUDENT
-    }
-
     const newPassword = await bcryptjs.hash(password, 10)
 
     const result = await this.usersService.create({
