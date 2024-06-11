@@ -76,4 +76,24 @@ export class GroupsService {
       },
     })
   }
+
+  async findAllByStudentId(studentId) {
+    return await this.prisma.studentGroup.findMany({
+      where: {
+        studentId: studentId,
+      },
+    })
+  }
+
+  async findAllByStudent(studentId) {
+    return await this.prisma.group.findMany({
+      where: {
+        students: {
+          some: {
+            id: studentId,
+          },
+        },
+      },
+    })
+  }
 }

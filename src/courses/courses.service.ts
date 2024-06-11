@@ -182,4 +182,48 @@ export class CoursesService {
       message: 'Professor removed from course',
     }
   }
+
+  async findAllByProfessor(professorId: string) {
+    const coursesIds = await this.prisma.professorCourse.findMany({
+      where: {
+        professorId,
+      },
+    })
+
+    const courses = []
+
+    for (const course of coursesIds) {
+      const courseInfo = await this.prisma.course.findUnique({
+        where: {
+          id: course.courseId,
+        },
+      })
+
+      courses.push(courseInfo)
+    }
+
+    return courses
+  }
+
+  async findAllByStudent(studentId: string) {
+    const coursesIds = await this.prisma.studentCourse.findMany({
+      where: {
+        studentId,
+      },
+    })
+
+    const courses = []
+
+    for (const course of coursesIds) {
+      const courseInfo = await this.prisma.course.findUnique({
+        where: {
+          id: course.courseId,
+        },
+      })
+
+      courses.push(courseInfo)
+    }
+
+    return courses
+  }
 }

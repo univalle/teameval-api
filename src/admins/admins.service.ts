@@ -198,4 +198,16 @@ export class AdminsService {
   async findCriteriaByEvaluation(evaluationId) {
     return this.evaluationService.findCriteriaByEvaluation(evaluationId)
   }
+
+  async findAllCoursesByProfessor(professorId) {
+    return this.coursesService.findAllByProfessor(professorId)
+  }
+
+  async findAllGroupsByStudent(studentId) {
+    return this.groupService.findAllByStudent(studentId)
+  }
+
+  async findAllCoursesByStudent(studentId) {
+    return this.coursesService.findAllByStudent(studentId)
+  }
 }

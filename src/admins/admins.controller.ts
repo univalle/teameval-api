@@ -74,6 +74,18 @@ export class AdminsController {
     return this.adminsService.findOneCourse(id)
   }
 
+  @Get('all-courses-by-professor/:id')
+  @ApiTags('Admins')
+  allCoursesByProfessor(@Param('id') id: string) {
+    return this.adminsService.findAllCoursesByProfessor(id)
+  }
+
+  @Get('all-courses-by-student/:id')
+  @ApiTags('Admins')
+  allCoursesByStudent(@Param('id') id: string) {
+    return this.adminsService.findAllCoursesByStudent(id)
+  }
+
   @Post('update-course/:id')
   @ApiTags('Admins')
   updateCourse(@Param('id') id: string, @Body() updateCourseDto) {
