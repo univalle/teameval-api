@@ -1,5 +1,5 @@
 ### get list of all users
-GET http://localhost:3001/api/usuarios
+GET http://localhost:3000/
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
 
