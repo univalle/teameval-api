@@ -50,4 +50,30 @@ export class GroupsService {
       },
     })
   }
+
+  async addStudentToGroup(groupId, studentId) {
+    const newId = crypto.randomUUID()
+
+    return await this.prisma.studentGroup.create({
+      data: {
+        id: newId,
+        studentId: studentId,
+        groupId: groupId,
+      },
+    })
+  }
+
+  async removeStudentFromGroup(groupId, studentId) {
+    const idGroup = await this.prisma.studentGroup.findFirst({
+      where: {
+        AND: [{ groupId: groupId }, { studentId: studentId }],
+      },
+    })
+
+    return await this.prisma.studentGroup.delete({
+      where: {
+        id: idGroup.id,
+      },
+    })
+  }
 }

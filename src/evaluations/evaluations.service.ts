@@ -52,4 +52,48 @@ export class EvaluationsService {
       },
     })
   }
+
+  async addCriteriaToEvaluation(evaluationId, criteriaId) {
+    const newId = crypto.randomUUID()
+
+    return await this.prisma.evaluationCriteria.create({
+      data: {
+        id: newId,
+        evaluationId: evaluationId,
+        criteriaId: criteriaId,
+      },
+    })
+  }
+
+  async removeCriteriaFromEvaluation(evaluationId, criteriaId) {
+    return await this.prisma.evaluationCriteria.deleteMany({
+      where: {
+        evaluationId: evaluationId,
+        criteriaId: criteriaId,
+      },
+    })
+  }
+
+  async addGroupAndStudentsToEvaluation(evaluationId, groupId, studentId) {
+    const newId = crypto.randomUUID()
+
+    return await this.prisma.studentGroupEvaluation.create({
+      data: {
+        id: newId,
+        evaluationId: evaluationId,
+        groupId: groupId,
+        studentId: studentId,
+      },
+    })
+  }
+
+  async removeGroupAndStudentsFromEvaluation(evaluationId, groupId, studentId) {
+    return await this.prisma.studentGroupEvaluation.deleteMany({
+      where: {
+        evaluationId: evaluationId,
+        groupId: groupId,
+        studentId: studentId,
+      },
+    })
+  }
 }

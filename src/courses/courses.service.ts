@@ -10,58 +10,44 @@ export class CoursesService {
     private prisma: PrismaService,
     private readonly usersService: UsersService,
   ) {}
-  async create(createCourseDto: CreateCourseDto, user) {
-    console.log('user', user)
-    console.log('createCourseDto', createCourseDto)
-    // const existingCourse = await this.prisma.course.findUnique({
-    //   where: {
-    //     code: createCourseDto.code,
-    //   },
-    // })
-    // console.log('existingCourse', existingCourse)
+  async create(createCourseDto: CreateCourseDto, user = null) {
+    const existingCourse = await this.prisma.course.findUnique({
+      where: {
+        code: createCourseDto.code,
+      },
+    })
 
-    // if (existingCourse) {
-    //   return {
-    //     message: 'Course already exists',
-    //   }
-    // }
-
-    // const newId = crypto.randomUUID()
-
-    // const checkName = createCourseDto.name ? createCourseDto.name : ''
-
-    // const courseCreation = await this.prisma.course.create({
-    //   data: {
-    //     id: newId,
-    //     name: checkName,
-    //     code: createCourseDto.code,
-    //   },
-    // })
-
-    // const newAssignmentId = crypto.randomUUID()
-
-    // if (user.role === 'PROFESSOR') {
-    //   const professorId = await this.usersService.findProfessorIdByEmail(
-    //     user.email,
-    //   )
-    //   await this.prisma.professorCourse.create({
-    //     data: {
-    //       id: newAssignmentId,
-    //       professorId: professorId.id,
-    //       courseId: courseCreation.id,
-    //     },
-    //   })
-    // }
-
-    // return {
-    //   id: courseCreation.id,
-    //   name: courseCreation.name,
-    //   code: courseCreation.code,
-    // }
-
-    return {
-      message: 'Not implemented',
+    if (existingCourse) {
+      return {
+        message: 'Course already exists',
+      }
     }
+
+    const newId = crypto.randomUUID()
+    const checkName = createCourseDto.name ? createCourseDto.name : ''
+
+    const courseCreation = await this.prisma.course.create({
+      data: {
+        id: newId,
+        name: checkName,
+        code: createCourseDto.code,
+      },
+    })
+
+    if (user !== null && user.role === 'PROFESSOR') {
+      const newAssignmentId = crypto.randomUUID()
+      const { id } = await this.usersService.findOneByEmail(user.email)
+
+      await this.prisma.professorCourse.create({
+        data: {
+          id: newAssignmentId,
+          professorId: id,
+          courseId: newId,
+        },
+      })
+    }
+
+    return courseCreation
   }
 
   async findAll() {
@@ -94,50 +80,13 @@ export class CoursesService {
   }
 
   async addStudentToCourse(studentId: string, courseId: string) {
-    const student = await this.prisma.user.findUnique({
-      where: {
-        id: studentId,
-      },
-    })
-
-    if (!student) {
-      return {
-        message: 'Student not found',
-      }
-    }
-
-    const course = await this.prisma.course.findUnique({
-      where: {
-        id: courseId,
-      },
-    })
-
-    if (!course) {
-      return {
-        message: 'Course not found',
-      }
-    }
-
-    const existingStudent = await this.prisma.studentCourse.findFirst({
-      where: {
-        studentId,
-        courseId,
-      },
-    })
-
-    if (existingStudent) {
-      return {
-        message: 'Student already in course',
-      }
-    }
-
-    const newId = crypto.randomUUID()
+    const newAssignmentId = crypto.randomUUID()
 
     await this.prisma.studentCourse.create({
       data: {
+        id: newAssignmentId,
         studentId,
         courseId,
-        id: newId,
       },
     })
 
@@ -188,5 +137,47 @@ export class CoursesService {
     }
 
     return courses
+  }
+
+  async removeStudentFromCourse(studentId: string, courseId: string) {
+    await this.prisma.studentCourse.deleteMany({
+      where: {
+        studentId,
+        courseId,
+      },
+    })
+
+    return {
+      message: 'Student removed from course',
+    }
+  }
+
+  async addProfessorToCourse(professorId: string, courseId: string) {
+    const newAssignmentId = crypto.randomUUID()
+
+    await this.prisma.professorCourse.create({
+      data: {
+        id: newAssignmentId,
+        professorId,
+        courseId,
+      },
+    })
+
+    return {
+      message: 'Professor added to course',
+    }
+  }
+
+  async removeProfessorFromCourse(professorId: string, courseId: string) {
+    await this.prisma.professorCourse.deleteMany({
+      where: {
+        professorId,
+        courseId,
+      },
+    })
+
+    return {
+      message: 'Professor removed from course',
+    }
   }
 }
