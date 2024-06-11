@@ -1,32 +1,142 @@
-### get list of all users
-GET http://localhost:3000/
+### Create a admin
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/auth/register
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Implc3VzQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcxODA4NDY4OSwiZXhwIjoxNzE4MTcxMDg5fQ.SMHHgn8DByIhacopttp-kOfV8NcJgTrf4M8pMylxYEw
 
-### Create a new user
-POST http://localhost:3001/api/usuarios
+{
+  "email":"jesus@admsssn.com",
+  "name":"jesussss",
+  "password":"jesus123456",
+  "role":"ADMIN",
+  "document":"11552651",
+  "type":"cc",
+  "gender":"masculino",
+  "phone":"32156456465"
+  
+}
+
+### Create a professor
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/auth/register
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
 
 {
-    "email": "dani@gmail.com",
-    "name": "dani",
-    "password": "12345",
-    "role": "monitor"
+  "email":"jesus@profesor.com",
+  "name":"jesus Dav",
+  "password":"jesus123456",
+  "role":"PROFESSOR",
+  "document":"11552651",
+  "type":"cc",
+  "gender":"masculino",
+  "phone":"32156456465"
+  
 }
 
-
-### Login as a user
-POST http://localhost:3001/api/ingreso
-Content-Type: application/json
-
-{
-    "email": "tristan@gmail.com",
-    "password": "12345"
-}
-
-
-### Delete a user
-DELETE http://localhost:3001/api/usuarios/655c271b48918ddac556eb87
+### Create a student
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/auth/register
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+{
+  "email":"jesus@student.com",
+  "name":"jesus David",
+  "password":"jesus123456",
+  "role":"STUDENT",
+  "document":"11552651",
+  "type":"cc",
+  "gender":"masculino",
+  "phone":"32156456465"
+  
+}
+
+### Get all users
+GET  https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/all-users
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+{
+  "email":"jesus@profesor.com",
+  "name":"jesus Dav",
+  "password":"jesus123456",
+  "role":"PROFESSOR",
+  "document":"11552651",
+  "type":"cc",
+  "gender":"masculino",
+  "phone":"32156456465"
+  
+}
+### Get all users by role
+GET  https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/all-users-by-role/{role}
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+
+### Create a course
+POST  https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/create-course
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+  {
+  "id":"123515",
+  "code":"sas121351",
+  "name":"desarrollo",
+  "description":"djadjasojdasjodas",
+  "period":"2"
+}
+  
+### Add student to course
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/add-student-to-course
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+{
+  "studentId":"c4bf9e87-23e2-4874-a21c-592c274d843b",
+  "courseId":"1b280d65-bb8d-40dd-9c99-bb6a3a6db317"
+  
+}
+### Remove student to course
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/remove-student-from-course
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+{
+  "studentId":"c4bf9e87-23e2-4874-a21c-592c274d843b",
+  "courseId":"1b280d65-bb8d-40dd-9c99-bb6a3a6db317"
+}
+### Get all Courses
+GET  https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/all-courses
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+### Get one Course
+GET  https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/one-course/{id}
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+
+### Update Course
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/update-course/{id}
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+{
+  "name": "BD"
+}
+
+### Create Criteria
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/create-criteria
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+{
+  "name": "CR1",
+  "description":"sadasdas",
+  "weight":5,
+  "code":"1231adas"
+}
+
+### Create evaluation
+POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/admins/create-evaluation
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
+{
+  "name": "BD"
+}
+
