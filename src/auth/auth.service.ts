@@ -16,21 +16,18 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register({ name, email, password, role }: RegisterDto) {
-    const user = await this.usersService.findOneByEmail(email)
+  async register(registerDto: RegisterDto) {
+    const user = await this.usersService.findOneByEmail(registerDto.email)
 
     if (user) {
       throw new BadRequestException('User already exists')
     }
 
-    const newPassword = await bcryptjs.hash(password, 10)
+    const newPassword = await bcryptjs.hash(registerDto.password, 10)
 
-    const result = await this.usersService.create({
-      name,
-      email,
-      password: newPassword,
-      role,
-    })
+    const result = await this.usersService.create(
+      Object.assign(registerDto, { password: newPassword }),
+    )
 
     return result
   }

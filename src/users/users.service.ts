@@ -26,7 +26,11 @@ export class UsersService {
       name: createUserDto.name,
       email: createUserDto.email,
       password: createUserDto.password,
+      document: createUserDto.document,
+      type: createUserDto.type,
+      gender: createUserDto.gender,
       role: createUserDto.role,
+      phone: createUserDto.phone,
     }
 
     try {

@@ -31,6 +31,8 @@ export class CoursesService {
         id: newId,
         name: checkName,
         code: createCourseDto.code,
+        description: createCourseDto.description,
+        period: createCourseDto.period,
       },
     })
 

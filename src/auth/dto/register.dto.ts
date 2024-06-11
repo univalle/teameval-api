@@ -20,4 +20,24 @@ export class RegisterDto {
   @IsString()
   @MinLength(1)
   role: Role
+
+  @Transform(({ value }) => value.trim())
+  @IsString()
+  @MinLength(1)
+  document: string
+
+  @Transform(({ value }) => value.trim())
+  @IsString()
+  @MinLength(1)
+  type: string
+
+  @Transform(({ value }) => value.trim())
+  @IsString()
+  @MinLength(1)
+  gender: string
+
+  @Transform(({ value }) => value.trim())
+  @IsString()
+  @MinLength(1)
+  phone: string
 }

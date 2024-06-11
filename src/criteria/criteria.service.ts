@@ -16,6 +16,7 @@ export class CriteriaService {
         code: createCriterionDto.code,
         name: checkName,
         description: createCriterionDto.description,
+        weight: createCriterionDto.weight,
       },
     })
   }

@@ -29,11 +29,16 @@ model User {
   email       String      @unique
   name        String
   password    String
+  document    String
+  type        String
+  gender      String
+  phone       String
   role        Role
   groups      StudentGroup[]
   courses     StudentCourse[]
   evaluations StudentGroupEvaluation[]
   professors  ProfessorCourse[]
+  calification     CriteriaStudentResult[]
 }
 
 
@@ -41,6 +46,8 @@ model Course {
   id          String      @id
   code        String      @unique
   name        String
+  description String
+  period      String
   professors  ProfessorCourse[]
   students    StudentCourse[]
 }
@@ -91,7 +98,9 @@ model Criteria {
   code        String      @unique
   name        String  
   description String
+  weight      Int
   evaluation  EvaluationCriteria[]
+  results     CriteriaStudentResult[]
 }
 
 model EvaluationCriteria {
@@ -109,5 +118,14 @@ model StudentGroupEvaluation {
   student         User        @relation(fields: [studentId], references: [id])
   evaluationId    String
   groupId         String
+  studentId       String
+}
+
+model CriteriaStudentResult {
+  id              String      @id
+  criteria        Criteria    @relation(fields: [criteriaId], references: [id])
+  student         User        @relation(fields: [studentId], references: [id])
+  result          Int
+  criteriaId      String
   studentId       String
 }
