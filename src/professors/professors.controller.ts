@@ -16,6 +16,13 @@ export class ProfessorsController {
   profile(@ActiveUser() user: UserActiveInterface) {
     return this.professorsService.profile(user)
   }
+  @Post('update-profile')
+  @ApiTags('professors')
+  updateProfile(@Body() update, @ActiveUser() user: UserActiveInterface) {
+    // console.log('update', update)
+    // console.log('user', user)
+    return this.professorsService.updateProfile(user, update)
+  }
 
   @ApiTags('professors')
   @Post('courses')

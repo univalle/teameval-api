@@ -35,6 +35,15 @@ export class StudentsController {
     return this.studentsService.profile(user)
   }
 
+  @Post('update-profile')
+  @ApiTags('students')
+  updateProfile(@Body() update, @ActiveUser() user: UserActiveInterface) {
+    console.log('update', update)
+    console.log('user', user)
+
+    return this.studentsService.updateProfile(user, update)
+  }
+
   @Get('courses')
   @ApiTags('students')
   courses(@ActiveUser() user: UserActiveInterface) {

@@ -18,6 +18,11 @@ export class ProfessorsService {
       id: userInfo.id,
     }
   }
+  async updateProfile(user, update) {
+    const { id } = await this.usersService.findOneByEmail(user.email)
+    console.log('id', id)
+    return this.usersService.update(id, update)
+  }
 
   async createCourse(course, user) {
     return await this.coursesService.create(course, user)
