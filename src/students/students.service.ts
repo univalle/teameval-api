@@ -37,14 +37,13 @@ export class StudentsService {
     return await this.groupsService.findAllByStudent(user.id)
   }
 
-  async professors(user) {
-    return 'professors for student with id ' + user.id
-  }
-
-  async evaluate(user) {
-    const { id } = await this.usersService.findOneByEmail(user.email)
-    // return this.coursesService.findAllByStudentId(id)
-    return 'evaluate for student with id ' + id
+  async evaluateCriteriaByStudent(evaluationId, criteriaId, studentId, result) {
+    return this.evaluationsService.evaluateCriteriaByStudent(
+      evaluationId,
+      criteriaId,
+      studentId,
+      result,
+    )
   }
 
   async results(user) {

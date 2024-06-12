@@ -51,21 +51,15 @@ export class StudentsController {
     return this.studentsService.groups(user)
   }
 
-  @Get('professors')
-  @ApiTags('students')
-  professors(@ActiveUser() user: UserActiveInterface) {
-    return this.studentsService.professors(user)
-  }
+  // @Get('evaluate')
+  // @ApiTags('students')
+  // evaluate(@ActiveUser() user: UserActiveInterface) {
+  //   return this.studentsService.evaluate(user)
+  // }
 
-  @Get('evaluate')
-  @ApiTags('students')
-  evaluate(@ActiveUser() user: UserActiveInterface) {
-    return this.studentsService.evaluate(user)
-  }
-
-  @Get('results')
-  @ApiTags('students')
-  results(@ActiveUser() user: UserActiveInterface) {
-    return this.studentsService.results(user)
-  }
+  // @Get('results')
+  // @ApiTags('students')
+  // results(@ActiveUser() user: UserActiveInterface) {
+  //   return this.studentsService.results(user)
+  // }
 }
