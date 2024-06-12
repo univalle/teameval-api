@@ -221,7 +221,7 @@ export class AdminsController {
     return this.adminsService.addGroupAndStudentsToEvaluation(
       body.evaluationId,
       body.groupId,
-      body.students,
+      body.studentId,
     )
   }
 
@@ -231,7 +231,7 @@ export class AdminsController {
     return this.adminsService.removeGroupAndStudentsFromEvaluation(
       body.evaluationId,
       body.groupId,
-      body.students,
+      body.studentId,
     )
   }
 
@@ -257,7 +257,6 @@ export class AdminsController {
   @ApiTags('Admins')
   evaluateCriteriaByStudent(@Body() body) {
     return this.adminsService.evaluateCriteriaByStudent(
-      body.evaluationId,
       body.studentId,
       body.criteriaId,
       body.result,

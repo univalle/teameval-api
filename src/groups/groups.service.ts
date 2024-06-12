@@ -77,13 +77,13 @@ export class GroupsService {
     })
   }
 
-  async findAllByStudentId(studentId) {
-    return await this.prisma.studentGroup.findMany({
-      where: {
-        studentId: studentId,
-      },
-    })
-  }
+  // async findAllByStudentId(studentId) {
+  //   return await this.prisma.studentGroup.findMany({
+  //     where: {
+  //       studentId: studentId,
+  //     },
+  //   })
+  // }
 
   async findAllByStudent(studentId) {
     return await this.prisma.studentGroup.findMany({

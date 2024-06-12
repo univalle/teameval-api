@@ -1,10 +1,10 @@
 ### Create a admin
-POST https://ubiquitous-system-4jqw44rp5gqj3qjqx-3000.app.github.dev/auth/register
+POST https://verbose-disco-5gvx6697jq7v2vp5g-3000.app.github.dev/auth/register
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Implc3VzQGFkbWluLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcxODA4NDY4OSwiZXhwIjoxNzE4MTcxMDg5fQ.SMHHgn8DByIhacopttp-kOfV8NcJgTrf4M8pMylxYEw
 
 {
-  "email":"jesus@admsssn.com",
+  "email":"jesus@admin.com",
   "name":"jesussss",
   "password":"jesus123456",
   "role":"ADMIN",
@@ -21,14 +21,15 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0ZDJmZmUxMjhjNzAyOGNkNSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDUzNzk1NCwiZXhwIjoxNzAwNTQxNTU0fQ.2za96VUTurB7qnz5cj5Eh0yDhWFDHWPXb959ZdEvZNo
 
 {
-  "email":"jesus@profesor.com",
+   "email":"jesus@profesor.com",
   "name":"jesus Dav",
   "password":"jesus123456",
   "role":"PROFESSOR",
   "document":"11552651",
   "type":"cc",
   "gender":"masculino",
-  "phone":"32156456465"
+  "phone":"32156456465",
+  "code":"11552651"
   
 }
 
@@ -45,7 +46,8 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWMxNGM0Z
   "document":"11552651",
   "type":"cc",
   "gender":"masculino",
-  "phone":"32156456465"
+  "phone":"32156456465",
+  "code":"2260283"
   
 }
 

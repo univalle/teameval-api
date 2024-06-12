@@ -1,6 +1,8 @@
 import {
+  Body,
   Controller,
   Get,
+  Post,
   // Get,
   // Post,
   // Body,
@@ -51,11 +53,22 @@ export class StudentsController {
     return this.studentsService.groups(user)
   }
 
-  // @Get('evaluate')
-  // @ApiTags('students')
-  // evaluate(@ActiveUser() user: UserActiveInterface) {
-  //   return this.studentsService.evaluate(user)
-  // }
+  @Post('evaluate')
+  @ApiTags('students')
+  evaluate(@Body() body, @ActiveUser() user: UserActiveInterface) {
+    const { criteriaId, result } = body
+    return this.studentsService.evaluateCriteriaByStudent(
+      criteriaId,
+      user,
+      result,
+    )
+  }
+
+  @Get('all')
+  @ApiTags('students')
+  all() {
+    return this.studentsService.all()
+  }
 
   // @Get('results')
   // @ApiTags('students')

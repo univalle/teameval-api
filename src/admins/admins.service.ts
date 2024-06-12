@@ -156,6 +156,7 @@ export class AdminsService {
   }
 
   async addGroupAndStudentsToEvaluation(evaluationId, groupId, studentId) {
+    console.log('studentID:', studentId)
     return this.evaluationService.addGroupAndStudentsToEvaluation(
       evaluationId,
       groupId,
@@ -186,9 +187,8 @@ export class AdminsService {
   // criteriaId      String
   // studentId       String
 
-  async evaluateCriteriaByStudent(evaluationId, criteriaId, studentId, result) {
+  async evaluateCriteriaByStudent(criteriaId, studentId, result) {
     return this.evaluationService.evaluateCriteriaByStudent(
-      evaluationId,
       criteriaId,
       studentId,
       result,

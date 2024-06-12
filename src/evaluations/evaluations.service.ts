@@ -84,13 +84,13 @@ export class EvaluationsService {
 
   async addGroupAndStudentsToEvaluation(evaluationId, groupId, studentId) {
     const newId = crypto.randomUUID()
-
+    console.log('studentID:', evaluationId)
     return await this.prisma.studentGroupEvaluation.create({
       data: {
         id: newId,
-        evaluationId: evaluationId,
-        groupId: groupId,
-        studentId: studentId,
+        evaluationId,
+        groupId,
+        studentId,
       },
     })
   }
@@ -105,7 +105,7 @@ export class EvaluationsService {
     })
   }
 
-  async evaluateCriteriaByStudent(evaluationId, studentId, criteriaId, value) {
+  async evaluateCriteriaByStudent(studentId, criteriaId, value) {
     const newId = crypto.randomUUID()
 
     return await this.prisma.criteriaStudentResult.create({
