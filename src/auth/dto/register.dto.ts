@@ -34,6 +34,11 @@ export class RegisterDto {
   @Transform(({ value }) => value.trim())
   @IsString()
   @MinLength(1)
+  code: string
+
+  @Transform(({ value }) => value.trim())
+  @IsString()
+  @MinLength(1)
   gender: string
 
   @Transform(({ value }) => value.trim())

@@ -28,6 +28,7 @@ export class UsersService {
       password: createUserDto.password,
       document: createUserDto.document,
       type: createUserDto.type,
+      code: createUserDto.code,
       gender: createUserDto.gender,
       role: createUserDto.role,
       phone: createUserDto.phone,

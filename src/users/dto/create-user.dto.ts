@@ -17,6 +17,7 @@ export class CreateUserDto {
   role: Role
   document: string
   type: string
+  code: string
   gender: string
   phone: string
 }
