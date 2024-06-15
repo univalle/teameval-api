@@ -1,43 +1,175 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { Injectable } from '@nestjs/common'
+import { CreateAdminDto } from './dto/create-admin.dto'
+import { UpdateAdminDto } from './dto/update-admin.dto'
+import { UsersService } from 'src/users/users.service'
+import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class AdminsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private prisma: PrismaService,
+  ) {}
 
-  async getAdmins(): Promise<any[]> {
-    // Utiliza el método findMany de Prisma para obtener todos los administradores
-    const admins = await this.prisma.admin.findMany();
-
-    // Si no hay ningún administrador, puedes devolver un arreglo vacío o lanzar un error, según tus necesidades
-    if (!admins || admins.length === 0) {
-      return []; // Devuelve un arreglo vacío si no hay administradores
-      // También podrías lanzar un error, por ejemplo:
-      // throw new NotFoundException('No admins found');
-    }
-
-    // Devuelve la lista de administradores
-    return admins;
+  //Courses CRUD
+  async findAllCourses() {
+    return await this.prisma.course.findMany()
   }
 
-  async createAdmin(admin: any): Promise<string> {
-    const id = crypto.randomUUID();
-    admin.id = id;
-
-    // Crear el administrador en la base de datos utilizando Prisma y esperar a que se complete
-    await this.prisma.admin.create({ data: admin });
-
-    // Devolver un mensaje que confirme la creación del administrador
-    return JSON.stringify({ message: 'create admin with id ' + id });
+  async findOneCourse(id: number) {
+    return await this.prisma.course.findUnique({
+      where: { id },
+    })
   }
 
-  async getAdmin(id: string): Promise<any> {
-    const admin = await this.prisma.admin.findUnique({ where: { id } });
+  async createCourse(data: any) {
 
-    if (!admin) {
-      throw new NotFoundException(`Admin with id ${id} not found`);
+    return await this.prisma.course.create({
+      data,
+    })
+  }
+
+  async updateCourse(id: number, data: any) {
+    return await this.prisma.course.update({
+      where: { id },
+      data,
+    })
+  }
+
+  async removeCourse(id: number) {
+    return await this.prisma.course.delete({
+      where: { id },
+    })
+  }
+
+  async findCoursesUser(id: number) {
+    const courses = await this.prisma.professorCourse.findMany({
+      where: { 
+        userId: id
+      },
+      include: {
+        course: true
+      },
+    })
+
+    if (!courses) {
+      return []
     }
+    const courseInfo = courses.map(item => ({
+      id: item.course.id,
+      name: item.course.name
+  }));
 
-    return admin;
+    return courseInfo
+  }
+
+  // Evaluation CRUD
+
+  async findAllEvaluations() {
+    return await this.prisma.evaluation.findMany()
+  }
+
+  async findOneEvaluation(id: number) {
+    return await this.prisma.evaluation.findUnique({
+      where: { id },
+    })
+  }
+
+  async createEvaluation(data: any) {
+    return await this.prisma.evaluation.create({
+      data,
+    })
+  }
+
+  async updateEvaluation(id: number, data: any) {
+    return await this.prisma.evaluation.update({
+      where: { id },
+      data,
+    })
+  }
+
+  async removeEvaluation(id: number) {
+    return await this.prisma.evaluation.delete({
+      where: { id },
+    })
+  }
+
+  //Criteria CRUD
+
+  async findAllCriteria() {
+    return await this.prisma.criteria.findMany()
+  }
+
+  async findOneCriteria(id: number) {
+    return await this.prisma.criteria.findUnique({
+      where: { id },
+    })
+  }
+
+  async createCriteria(data: any) {
+    return await this.prisma.criteria.create({
+      data,
+    })
+  }
+
+  async updateCriteria(id: number, data: any) {
+    return await this.prisma.criteria.update({
+      where: { id },
+      data,
+    })
+  }
+
+  async removeCriteria(id: number) {
+    return await this.prisma.criteria.delete({
+      where: { id },
+    })
+  }
+
+  //Group CRUD
+
+  async findAllGroups() {
+    return await this.prisma.group.findMany()
+  }
+
+  async findOneGroup(id: number) {
+    return await this.prisma.group.findUnique({
+      where: { id },
+    })
+  }
+
+  async createGroup(data: any) {
+
+    console.log(data)
+
+    const { name, code, course } = data
+
+    const courseIdNumber = Number(course)
+
+    console.log(courseIdNumber)
+
+    return await this.prisma.group.create({
+      data: {
+        name,
+        code,
+        course: {
+          connect: {
+            id: courseIdNumber
+          }
+        }
+      }
+    })
+  }
+
+  async updateGroup(id: number, data: any) {
+    return await this.prisma.group.update({
+      where: { id },
+      data,
+    })
+  }
+
+  async removeGroup(id: number) {
+    return await this.prisma.group.delete({
+      where: { id },
+    })
   }
 }

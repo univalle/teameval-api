@@ -4,9 +4,6 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-// migration
-// npx prisma migrate dev --name init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -16,24 +13,130 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model Estudiante {
-  id          String      @id 
-  email       String   @unique
-  name        String
-  password    String
+// Modelo de usuario
+model User {
+  id                      Int                     @id @default(autoincrement()) // Identificador único del usuario
+  email                   String                  @unique // Correo electrónico único del usuario
+  name                    String // Nombre del usuario
+  password                String // Contraseña del usuario
+  role                    UserRole[] // Rol del usuario (estudiante, administrador, profesor)
+  code                    String // Código único del usuario
+  professorCourses        ProfessorCourse[] // Cursos impartidos por el usuario como profesor
+  studentCourses          StudentCourse[] // Cursos en los que está inscrito el usuario como estudiante
+  studentGroups           StudentGroup[] // Grupos a los que pertenece el usuario como estudiante
+  criteriaStudentResults  CriteriaStudentResult[] @relation("StudentResultStudent") // Relación con los resultados de criterios como estudiante
+  evaluatedStudentResults CriteriaStudentResult[] @relation("StudentResultEvaluated") // Relación con los resultados de criterios como evaluador
+  proffesorEvaluations    Evaluation[] // Evaluaciones creadas por el usuario como profesor
+  createdAt               DateTime                @default(now()) // Fecha y hora de creación del usuario
+  updatedAt               DateTime                @updatedAt // Fecha y hora de la última actualización del usuario
 }
 
-model Admin {
-  id          String      @id 
-  email       String   @unique
-  name        String
-  password    String
+// Tipos de roles de usuario
+enum UserRole {
+  STUDENT
+  ADMIN
+  PROFESSOR
 }
 
-model Criteria{
-  id           String      @id
-  criteriaName String   
-  description  String
-  weight       String
+// Modelo de curso
+model Course {
+  id               Int               @id @default(autoincrement()) // Identificador único del curso
+  code             String            @unique // Código único del curso
+  name             String // Nombre del curso
+  description      String // Descripción del curso
+  academicPeriod   String // Período académico del curso
+  professorCourses ProfessorCourse[] // Relación con los profesores que imparten el curso
+  studentCourses   StudentCourse[] // Relación con los estudiantes inscritos en el curso
+  groups           Group[] // Relación con los grupos del curso
+  createdAt        DateTime          @default(now()) // Fecha y hora de creación del usuario
+  updatedAt        DateTime          @updatedAt // Fecha y hora de la última actualización del usuario
+}
+
+// Modelo de grupo
+model Group {
+  id              Int               @id @default(autoincrement()) // Identificador único del grupo
+  code            String            @unique // Código único del grupo
+  name            String // Nombre del grupo
+  idCourse        Int               // ID del curso al que pertenece el grupo
+  course          Course            @relation(fields: [idCourse], references: [id]) // Curso al que pertenece el grupo
+  studentGroups   StudentGroup[] // Relación con los estudiantes que pertenecen al grupo
+  GroupEvaluation GroupEvaluation[]
+  createdAt       DateTime          @default(now()) // Fecha y hora de creación del usuario
+  updatedAt       DateTime          @updatedAt // Fecha y hora de la última actualización del usuario
+}
+
+// Modelo de evaluación
+model Evaluation {
+  id               Int               @id @default(autoincrement()) // Identificador único de la evaluación
+  code             String            @unique // Código único de la evaluación
+  name             String // Nombre de la evaluación
+  description      String // Descripción de la evaluación
+  idProfessor      Int               // ID del profesor que creó la evaluación
+  professor        User              @relation(fields: [idProfessor], references: [id]) // Profesor que creó la evaluación
+  groupEvaluations GroupEvaluation[] // Relación con los grupos asociados a la evaluación
+  criterias        Criteria[] // Relación con los criterios de evaluación
+  createdAt        DateTime          @default(now()) // Fecha y hora de creación del usuario
+  updatedAt        DateTime          @updatedAt // Fecha y hora de la última actualización del usuario
+}
+
+// Modelo de criterio de evaluación
+model Criteria {
+  id                     Int                     @id @default(autoincrement()) // Identificador único del criterio
+  code                   String                  @unique // Código único del criterio
+  name                   String // Nombre del criterio
+  description            String // Descripción del criterio
+  weight                 Int // Peso del criterio en la evaluación
+  evaluation             Evaluation              @relation(fields: [evaluationId], references: [id]) // Relación con la evaluación a la que pertenece el criterio
+  evaluationId           Int // ID de la evaluación a la que pertenece el criterio
+  criteriaStudentResults CriteriaStudentResult[] // Relación con los resultados de los estudiantes en el criterio
+  createdAt              DateTime                @default(now()) // Fecha y hora de creación del usuario
+  updatedAt              DateTime                @updatedAt // Fecha y hora de la última actualización del usuario
+}
+
+// Modelo de relación entre profesores y cursos
+model ProfessorCourse {
+  id       Int    @id @default(autoincrement()) // Identificador único de la relación
+  user     User   @relation(fields: [userId], references: [id]) // Usuario (profesor) asociado a la relación
+  userId   Int // ID del usuario (profesor)
+  course   Course @relation(fields: [courseId], references: [id]) // Curso asociado a la relación
+  courseId Int // ID del curso
+}
+
+// Modelo de relación entre estudiantes y cursos
+model StudentCourse {
+  id       Int    @id @default(autoincrement()) // Identificador único de la relación
+  user     User   @relation(fields: [userId], references: [id]) // Usuario (estudiante) asociado a la relación
+  userId   Int // ID del usuario (estudiante)
+  course   Course @relation(fields: [courseId], references: [id]) // Curso asociado a la relación
+  courseId Int // ID del curso
+}
+
+// Modelo de relación entre estudiantes y grupos
+model StudentGroup {
+  id      Int   @id @default(autoincrement()) // Identificador único de la relación
+  group   Group @relation(fields: [groupId], references: [id]) // Grupo asociado a la relación
+  groupId Int // ID del grupo
+  user    User  @relation(fields: [userId], references: [id]) // Usuario (estudiante) asociado a la relación
+  userId  Int // ID del usuario (estudiante)
+}
+
+// Modelo de resultados de criterios de evaluación para estudiantes
+model CriteriaStudentResult {
+  id                 Int      @id @default(autoincrement()) // Identificador único del resultado
+  value              Int // Valor del resultado del criterio
+  criteria           Criteria @relation(fields: [criteriaId], references: [id]) // Criterio asociado al resultado
+  criteriaId         Int // ID del criterio
+  student            User     @relation(name: "StudentResultStudent", fields: [studentId], references: [id]) // Usuario (estudiante) asociado al resultado
+  studentId          Int // ID del estudiante
+  evaluatedStudentId Int
+  evaluatedStudent   User     @relation(name: "StudentResultEvaluated", fields: [evaluatedStudentId], references: [id]) // estudiante que evaluó un estudiante
+}
+
+// Modelo de relación entre grupos y evaluaciones
+model GroupEvaluation {
+  id           Int        @id @default(autoincrement()) // Identificador único de la relación
+  group        Group      @relation(fields: [groupId], references: [id]) // Grupo asociado a la relación
+  groupId      Int // ID del grupo
+  evaluation   Evaluation @relation(fields: [evaluationId], references: [id]) // Evaluación asociada a la relación
+  evaluationId Int // ID de la evaluación
 }
